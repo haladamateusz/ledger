@@ -12,7 +12,7 @@
         "db:init": "node src/cli/init-db.ts",
         "format": "oxfmt",
         "format:check": "oxfmt --check",
-        "import": "node src/import-csv.ts",
+        "import:revolut": "node src/cli/import-revolut.ts",
         "inspect:revolut": "node src/cli/inspect-revolut.ts",
         "lint": "oxlint .",
         "lint:fix": "oxlint . --fix",
