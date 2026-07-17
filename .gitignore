@@ -1,5 +1,5 @@
 node_modules/
 data/*.csv
-data/*.db
+data/*.sqlite
 .env
 .idea/

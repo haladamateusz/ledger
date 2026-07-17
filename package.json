@@ -8,15 +8,16 @@
     "type": "module",
     "main": "index.js",
     "scripts": {
-        "import": "node src/import-csv.ts",
-        "inspect:revolut": "node src/cli/inspect-revolut.ts",
-        "typecheck": "tsc --noEmit",
-        "test": "vitest run",
-        "lint": "oxlint .",
-        "lint:fix": "oxlint . --fix",
+        "check": "npm run typecheck && npm test && npm run lint && npm run format:check",
+        "db:init": "node src/cli/init-db.ts",
         "format": "oxfmt",
         "format:check": "oxfmt --check",
-        "check": "npm run typecheck && npm test && npm run lint && npm run format:check"
+        "import": "node src/import-csv.ts",
+        "inspect:revolut": "node src/cli/inspect-revolut.ts",
+        "lint": "oxlint .",
+        "lint:fix": "oxlint . --fix",
+        "test": "vitest run",
+        "typecheck": "tsc --noEmit"
     },
     "dependencies": {
         "better-sqlite3": "^12.11.1",
