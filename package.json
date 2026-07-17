@@ -8,6 +8,7 @@
     "type": "module",
     "main": "index.js",
     "scripts": {
+        "agent:ask": "node src/agent/ollama-mcp-chat.ts",
         "check": "npm run typecheck && npm test && npm run lint && npm run format:check",
         "db:init": "node src/cli/init-db.ts",
         "format": "oxfmt",
