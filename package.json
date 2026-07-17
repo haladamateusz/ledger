@@ -16,6 +16,9 @@
         "inspect:revolut": "node src/cli/inspect-revolut.ts",
         "lint": "oxlint .",
         "lint:fix": "oxlint . --fix",
+        "report:busiest-merchant-month": "node src/cli/report-busiest-merchant-month.ts",
+        "report:largest-expense": "node src/cli/report-largest-expense.ts",
+        "report:monthly-merchant": "node src/cli/report-monthly-merchant.ts",
         "test": "vitest run",
         "typecheck": "tsc --noEmit"
     },
