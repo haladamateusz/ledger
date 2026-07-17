@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, expect, it } from 'vitest';
 import type { Database as SqliteDatabase } from 'better-sqlite3';
 import type { LedgerEntry } from '../../src/domain/ledger-entry.ts';
 import {

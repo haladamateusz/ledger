@@ -10,7 +10,7 @@ import {
     findTotalMerchantSpendingTool,
 } from '../tools/ledger-tools.ts';
 import type { LargestExpenseOptions } from '../reports/largest-expense.ts';
-import { type Currency, CurrencySchema } from '../domain/currency.ts';
+import { CurrencySchema } from '../domain/currency.ts';
 import { decimalPattern } from '../domain/decimal.ts';
 import { convertCurrencyTool } from '../tools/currency-tools.ts';
 
