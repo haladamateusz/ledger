@@ -4,7 +4,7 @@
     "description": "",
     "keywords": [],
     "license": "ISC",
-    "author": "",
+    "author": "Mateusz Halada",
     "type": "module",
     "main": "index.js",
     "scripts": {
