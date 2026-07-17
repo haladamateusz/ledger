@@ -1,15 +1,15 @@
-import { readFileSync } from "node:fs";
-import { basename } from "node:path";
-import { parse } from "csv-parse/sync";
-import { RevolutRowSchema } from "../importers/revolut/row-schema.ts";
+import { readFileSync } from 'node:fs';
+import { basename } from 'node:path';
+import { parse } from 'csv-parse/sync';
+import { RevolutRowSchema } from '../importers/revolut/row-schema.ts';
 
 const csvPath = process.argv[2];
 
 if (!csvPath) {
-    throw new Error("Usage: node src/cli/inspect-revolut.ts <csv-path>");
+    throw new Error('Usage: node src/cli/inspect-revolut.ts <csv-path>');
 }
 
-const fileContent = readFileSync(csvPath, "utf8");
+const fileContent = readFileSync(csvPath, 'utf8');
 
 const records: unknown[] = parse(fileContent, {
     columns: true,
@@ -41,7 +41,7 @@ for (const [index, record] of records.entries()) {
         invalidRowDetails.push({
             csvRow: index + 2,
             issues: parsed.error.issues.map((issue) => ({
-                field: issue.path.join("."),
+                field: issue.path.join('.'),
                 message: issue.message,
             })),
         });

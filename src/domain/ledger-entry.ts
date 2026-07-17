@@ -1,10 +1,6 @@
-import type { Currency } from "./currency.ts";
+import type { Currency } from './currency.ts';
 
-export type LedgerStatus =
-    | "posted"
-    | "reversed"
-    | "pending"
-    | "failed";
+export type LedgerStatus = 'posted' | 'reversed' | 'pending' | 'failed';
 
 export type LedgerEntry = {
     source: string;

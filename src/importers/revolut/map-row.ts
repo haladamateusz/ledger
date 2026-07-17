@@ -1,8 +1,8 @@
-import { CurrencySchema } from "../../domain/currency.ts";
-import type { LedgerEntry, LedgerStatus } from "../../domain/ledger-entry.ts";
-import { parseDecimalToMinorUnits } from "../../domain/money.ts";
-import type { RevolutRow } from "./row-schema.ts";
-import { revolutTimestampPattern } from "./patterns.ts";
+import { CurrencySchema } from '../../domain/currency.ts';
+import type { LedgerEntry, LedgerStatus } from '../../domain/ledger-entry.ts';
+import { parseDecimalToMinorUnits } from '../../domain/money.ts';
+import type { RevolutRow } from './row-schema.ts';
+import { revolutTimestampPattern } from './patterns.ts';
 
 export type MapRevolutRowOptions = {
     sourceFile: string;
@@ -25,9 +25,9 @@ export function mapRevolutRowToLedgerEntry(
     const currency = CurrencySchema.parse(row.Currency);
 
     return {
-        source: "revolut",
+        source: 'revolut',
         sourceType: row.Type,
-        occurredAt: toZonedIsoTimestamp(row["Started Date"]),
+        occurredAt: toZonedIsoTimestamp(row['Started Date']),
         description: row.Description,
         amountMinor: parseDecimalToMinorUnits(row.Amount, currency),
         feeMinor: parseDecimalToMinorUnits(row.Fee, currency),
@@ -40,17 +40,16 @@ export function mapRevolutRowToLedgerEntry(
 
 function mapStatus(state: string): LedgerStatus {
     switch (state) {
-        case "COMPLETED":
-            return "posted";
+        case 'COMPLETED':
+            return 'posted';
 
-        case "REVERTED":
-            return "reversed";
+        case 'REVERTED':
+            return 'reversed';
 
         default:
             throw new Error(`Unsupported Revolut state: ${state}`);
     }
 }
-
 
 function toZonedIsoTimestamp(revolutTimestamp: string): string {
     const match = revolutTimestampPattern.exec(revolutTimestamp);
@@ -75,31 +74,24 @@ function toZonedIsoTimestamp(revolutTimestamp: string): string {
 
 function getWarsawOffset(parts: DateTimeParts): string {
     const approximateInstant = new Date(
-        Date.UTC(
-            parts.year,
-            parts.month - 1,
-            parts.day,
-            parts.hour,
-            parts.minute,
-            parts.second,
-        ),
+        Date.UTC(parts.year, parts.month - 1, parts.day, parts.hour, parts.minute, parts.second),
     );
 
-    const formatter = new Intl.DateTimeFormat("en-US", {
-        timeZone: "Europe/Warsaw",
-        timeZoneName: "longOffset",
+    const formatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Europe/Warsaw',
+        timeZoneName: 'longOffset',
     });
 
     const timeZoneName = formatter
         .formatToParts(approximateInstant)
-        .find((part) => part.type === "timeZoneName")?.value;
+        .find((part) => part.type === 'timeZoneName')?.value;
 
     if (!timeZoneName) {
-        throw new Error("Could not determine Europe/Warsaw offset");
+        throw new Error('Could not determine Europe/Warsaw offset');
     }
 
-    if (timeZoneName === "GMT") {
-        return "+00:00";
+    if (timeZoneName === 'GMT') {
+        return '+00:00';
     }
 
     const offsetMatch = /^GMT([+-]\d{2}:\d{2})$/.exec(timeZoneName);

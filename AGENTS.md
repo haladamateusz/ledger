@@ -16,16 +16,16 @@ When creating or suggesting commits, use Conventional Commits. The format is:
 
 - The header is required.
 - Use lowercase `type` values from this list:
-  - `feat`: a new user-visible capability or supported behavior.
-  - `fix`: a bug fix.
-  - `docs`: documentation-only changes.
-  - `test`: adding or correcting tests.
-  - `refactor`: code changes that neither fix a bug nor add a feature.
-  - `perf`: performance improvements.
-  - `build`: build system, package manager, or dependency changes.
-  - `ci`: CI configuration or automation changes.
-  - `chore`: maintenance that does not affect source, tests, docs, build, or CI.
-  - `revert`: revert a previous commit.
+    - `feat`: a new user-visible capability or supported behavior.
+    - `fix`: a bug fix.
+    - `docs`: documentation-only changes.
+    - `test`: adding or correcting tests.
+    - `refactor`: code changes that neither fix a bug nor add a feature.
+    - `perf`: performance improvements.
+    - `build`: build system, package manager, or dependency changes.
+    - `ci`: CI configuration or automation changes.
+    - `chore`: maintenance that does not affect source, tests, docs, build, or CI.
+    - `revert`: revert a previous commit.
 - Use an optional lowercase scope when it helps identify the affected area.
   Prefer repo-specific scopes such as `cli`, `domain`, `importers`,
   `revolut`, `tests`, `data`, `deps`, or `config`.
