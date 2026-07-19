@@ -10,6 +10,7 @@ import {
     findBusiestMerchantMonthTool,
     findLargestExpenseTool,
     findTotalMerchantSpendingTool,
+    getEntriesTool,
 } from '../../src/tools/ledger-tools.ts';
 
 let db: SqliteDatabase;
@@ -231,6 +232,70 @@ describe('ledger tools', () => {
                 currency: 'CHF',
                 totalAmountDisplay: '12.50 CHF',
             });
+        });
+    });
+
+    describe('getEntriesTool', () => {
+        it('returns entries with formatted display amounts', () => {
+            insertEntry({
+                sourceRow: 2,
+                occurredAt: '2025-07-02T08:30:00+02:00',
+                description: 'Costa Coffee',
+                amountMinor: -1234,
+                currency: 'PLN',
+            });
+
+            insertEntry({
+                sourceRow: 3,
+                occurredAt: '2025-07-03T09:15:00+02:00',
+                description: 'Lidl',
+                amountMinor: -2500,
+                currency: 'CHF',
+            });
+
+            expect(getEntriesTool(db, { ids: [1, 2] })).toEqual([
+                {
+                    id: 1,
+                    occurredAt: '2025-07-02T08:30:00+02:00',
+                    description: 'Costa Coffee',
+                    amountMinor: -1234,
+                    amountMinorDisplay: '12.34 PLN',
+                    currency: 'PLN',
+                    sourceType: 'Card Payment',
+                },
+                {
+                    id: 2,
+                    occurredAt: '2025-07-03T09:15:00+02:00',
+                    description: 'Lidl',
+                    amountMinor: -2500,
+                    amountMinorDisplay: '25.00 CHF',
+                    currency: 'CHF',
+                    sourceType: 'Card Payment',
+                },
+            ]);
+        });
+
+        it('returns an empty entries array when no ids match', () => {
+            insertEntry({
+                sourceRow: 2,
+                description: 'Costa Coffee',
+            });
+
+            expect(getEntriesTool(db, { ids: [999] })).toEqual([]);
+        });
+
+        it('preserves requested id order through the tool layer', () => {
+            insertEntry({
+                sourceRow: 2,
+                description: 'First',
+            });
+
+            insertEntry({
+                sourceRow: 3,
+                description: 'Second',
+            });
+
+            expect(getEntriesTool(db, { ids: [2, 1] }).map((entry) => entry.id)).toEqual([2, 1]);
         });
     });
 });

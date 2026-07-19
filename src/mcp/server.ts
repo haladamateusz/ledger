@@ -8,6 +8,7 @@ import {
     findBusiestMerchantMonthTool,
     findLargestExpenseTool,
     findTotalMerchantSpendingTool,
+    getEntriesTool,
 } from '../tools/ledger-tools.ts';
 import type { LargestExpenseOptions } from '../reports/largest-expense.ts';
 import { CurrencySchema } from '../domain/currency.ts';
@@ -79,6 +80,38 @@ server.registerTool(
             };
 
             const result = findLargestExpenseTool(db, options);
+
+            return {
+                content: [
+                    {
+                        type: 'text',
+                        text: JSON.stringify(result),
+                    },
+                ],
+                structuredContent: result,
+            };
+        } finally {
+            db.close();
+        }
+    },
+);
+
+server.registerTool(
+    'get_entries',
+    {
+        title: 'Get Entries',
+        description:
+            'Get transaction details for entries by ID. Returns entries in the requested ID order and reports IDs that were not found.',
+        inputSchema: {
+            ids: z.array(z.number().int().positive()).min(1),
+        },
+    },
+    async ({ ids }) => {
+        const db = openLedgerDatabase(dbPath);
+
+        try {
+            const entries = getEntriesTool(db, { ids });
+            const result = { entries };
 
             return {
                 content: [

@@ -100,6 +100,7 @@ Available MCP tools:
 
 - `find_busiest_merchant_month`
 - `find_largest_expense`
+- `get_entries`
 - `find_total_merchant_spending`
 - `convert_currency`
 

@@ -10,6 +10,7 @@ import {
 } from '../reports/total-merchant-spending.ts';
 import { formatMoneyMinor } from '../presentation/money.ts';
 import { type Currency, CurrencySchema } from '../domain/currency.ts';
+import { type EntriesOptions, getEntries } from '../reports/entries.ts';
 
 export type TotalMerchantSpendingToolResult = {
     merchant: string;
@@ -38,6 +39,16 @@ export type FindBusiestMerchantMonthToolResult = {
     totalAmountMinor: number | null;
     totalAmountDisplay: string | null;
     entryIds: number[];
+};
+
+export type GetEntriesToolResult = {
+    id: number;
+    occurredAt: string;
+    description: string;
+    amountMinor: number;
+    amountMinorDisplay: string;
+    currency: Currency;
+    sourceType: string;
 };
 
 export function findBusiestMerchantMonthTool(
@@ -71,6 +82,26 @@ export function findBusiestMerchantMonthTool(
         currency: row.currency,
         entryIds: row.entryIds,
     };
+}
+
+export function getEntriesTool(db: SqliteDatabase, input: EntriesOptions): GetEntriesToolResult[] {
+    const rows = getEntries(db, input);
+
+    if (!rows.length) {
+        return [];
+    }
+
+    return rows.map((row) => ({
+        id: row.id,
+        occurredAt: row.occurredAt,
+        description: row.description,
+        amountMinor: row.amountMinor,
+        amountMinorDisplay: formatMoneyMinor(row.amountMinor, row.currency, {
+            absolute: true,
+        }),
+        currency: row.currency,
+        sourceType: row.sourceType,
+    }));
 }
 
 export function findLargestExpenseTool(
